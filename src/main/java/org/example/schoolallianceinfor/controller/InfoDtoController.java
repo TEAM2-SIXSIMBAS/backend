@@ -1,3 +1,4 @@
+// src/main/java/org/example/schoolallianceinfor/controller/InfoDtoController.java
 package org.example.schoolallianceinfor.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,14 @@ public class InfoDtoController {
 
     private final InfoDtoService infoService;
 
-    // ====== StoreInfoDto 조회 ======
-    @GetMapping("/StoreInfoDto")
+    /** ===== StoreInfoDto 전체 조회 ===== */
+    @GetMapping("/stores")
     public ResponseEntity<List<StoreInfoDto>> getAllStores() {
         return ResponseEntity.ok(infoService.getAllStoreInfo());
     }
 
-    // ====== PartnershipInfoDto 조회 ======
-    @GetMapping("/PartnershipInfoDto")
+    /** ===== PartnershipInfoDto 전체 조회 ===== */
+    @GetMapping("/partnerships")
     public ResponseEntity<List<PartnershipInfoDto>> getAllPartnerships() {
         return ResponseEntity.ok(infoService.getAllPartnershipInfo());
     }

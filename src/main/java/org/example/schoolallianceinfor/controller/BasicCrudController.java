@@ -1,29 +1,35 @@
+// src/main/java/org/example/schoolallianceinfor/controller/BasicCrudController.java
 package org.example.schoolallianceinfor.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.schoolallianceinfor.dto.PartnershipDto;
-import org.example.schoolallianceinfor.dto.ReviewDto;
-import org.example.schoolallianceinfor.dto.StoreDto;
+import org.example.schoolallianceinfor.dto.partnership.PartnershipRequest;
+import org.example.schoolallianceinfor.dto.partnership.PartnershipResponse;
+import org.example.schoolallianceinfor.dto.review.ReviewRequest;
+import org.example.schoolallianceinfor.dto.review.ReviewResponse;
+import org.example.schoolallianceinfor.dto.store.StoreRequest;
+import org.example.schoolallianceinfor.dto.store.StoreResponse;
 import org.example.schoolallianceinfor.service.BasicCrudService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/basic")
 @RequiredArgsConstructor
-public class BasicCrudController {
+public class    BasicCrudController {
+
     private final BasicCrudService crud;
 
     // ========== Store ==========
     @PostMapping("/stores")
-    public ResponseEntity<Void> createStore(@RequestBody StoreDto dto) {
-        crud.createStore(dto);
-        return ResponseEntity.status(201).build();
+    public ResponseEntity<StoreResponse> createStore(@RequestBody @Valid StoreRequest request) {
+        StoreResponse resp = crud.createStore(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @GetMapping("/stores/{id}")
-    public ResponseEntity<StoreDto> getStore(@PathVariable Integer id) {
+    public ResponseEntity<StoreResponse> getStore(@PathVariable Integer id) {
         return ResponseEntity.ok(crud.readStoreById(id));
     }
 
@@ -35,13 +41,13 @@ public class BasicCrudController {
 
     // ========== Partnership ==========
     @PostMapping("/partnerships")
-    public ResponseEntity<Void> createPartnership(@RequestBody PartnershipDto dto) {
-        crud.createPartnership(dto);
-        return ResponseEntity.status(201).build();
+    public ResponseEntity<PartnershipResponse> createPartnership(@RequestBody @Valid PartnershipRequest request) {
+        PartnershipResponse resp = crud.createPartnership(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @GetMapping("/partnerships/{id}")
-    public ResponseEntity<PartnershipDto> getPartnership(@PathVariable Integer id) {
+    public ResponseEntity<PartnershipResponse> getPartnership(@PathVariable Integer id) {
         return ResponseEntity.ok(crud.readPartnershipById(id));
     }
 
@@ -53,13 +59,13 @@ public class BasicCrudController {
 
     // ========== Review ==========
     @PostMapping("/reviews")
-    public ResponseEntity<Void> createReview(@RequestBody ReviewDto dto) {
-        crud.createReview(dto);
-        return ResponseEntity.status(201).build();
+    public ResponseEntity<ReviewResponse> createReview(@RequestBody @Valid ReviewRequest request) {
+        ReviewResponse resp = crud.createReview(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @GetMapping("/reviews/{id}")
-    public ResponseEntity<ReviewDto> getReview(@PathVariable Integer id) {
+    public ResponseEntity<ReviewResponse> getReview(@PathVariable Integer id) {
         return ResponseEntity.ok(crud.readReviewById(id));
     }
 

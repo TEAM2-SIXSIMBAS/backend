@@ -1,3 +1,4 @@
+// src/main/java/org/example/schoolallianceinfor/controller/HomeController.java
 package org.example.schoolallianceinfor.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -15,21 +16,18 @@ public class HomeController {
 
     private final HomeService homeService;
 
+    /**
+     * 예) GET /partnership-info?category=food&sort=views&page=1
+     * sort: views | discountRate | saleStartDate | saleEndDate | useStartDate | useEndDate (대소문자 무관)
+     */
     @GetMapping
     public Map<String, List<PartnershipInfoDto>> getHomePartnerships(
             @RequestParam(required = false) String category,
             @RequestParam(defaultValue = "views") String sort,
             @RequestParam(defaultValue = "1") int page
     ) {
-        // 조회수 상위 3개
         List<PartnershipInfoDto> top3 = homeService.getTop3ByViews();
-
-        // 카테고리별 정렬된 리스트
         List<PartnershipInfoDto> sorted = homeService.getSortedPartnershipsByCategory(category, sort, page);
-
-        return Map.of(
-                "top3", top3,
-                "sort", sorted
-        );
+        return Map.of("top3", top3, "sort", sorted);
     }
 }
