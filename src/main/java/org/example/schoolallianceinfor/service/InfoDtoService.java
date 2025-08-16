@@ -2,8 +2,8 @@
 package org.example.schoolallianceinfor.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.schoolallianceinfor.dto.StoreInfoDto;
-import org.example.schoolallianceinfor.dto.PartnershipInfoDto;
+import org.example.schoolallianceinfor.dto.store.StoreInfoDto;
+import org.example.schoolallianceinfor.dto.partnership.PartnershipInfoDto;
 import org.example.schoolallianceinfor.mapper.StoreMapper;
 import org.example.schoolallianceinfor.mapper.PartnershipMapper;
 import org.example.schoolallianceinfor.repository.StoreRepository;

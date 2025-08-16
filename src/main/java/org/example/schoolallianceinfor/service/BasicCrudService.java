@@ -11,6 +11,7 @@ import org.example.schoolallianceinfor.dto.review.ReviewResponse;
 import org.example.schoolallianceinfor.entity.Partnership;
 import org.example.schoolallianceinfor.entity.Review;
 import org.example.schoolallianceinfor.entity.Store;
+import org.example.schoolallianceinfor.entity.StoreLocation;
 import org.example.schoolallianceinfor.mapper.PartnershipMapper;
 import org.example.schoolallianceinfor.mapper.ReviewMapper;
 import org.example.schoolallianceinfor.mapper.StoreMapper;
@@ -20,6 +21,8 @@ import org.example.schoolallianceinfor.repository.StoreRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class BasicCrudService {
@@ -27,7 +30,7 @@ public class BasicCrudService {
     private final StoreRepository storeRepository;
     private final PartnershipRepository partnershipRepository;
     private final ReviewRepository reviewRepository;
-
+    private final KakaoMapService KakaoMapService;
     private final StoreMapper storeMapper;
     private final PartnershipMapper partnershipMapper;
     private final ReviewMapper reviewMapper;
@@ -36,10 +39,42 @@ public class BasicCrudService {
 
     @Transactional
     public StoreResponse createStore(StoreRequest req) {
-        Store entity = storeMapper.toEntity(req);
-        Store saved = storeRepository.save(entity);
-        return storeMapper.toResponse(saved);
+        // 1) Store 저장 (PK 먼저 확보: StoreLocation이 @MapsId 사용)
+        Store store = storeMapper.toEntity(req);
+        storeRepository.save(store);
+
+// createStore 내부에서 좌표 결정 (주소 우선 → 이름 폴백)
+        double[] coord = KakaoMapService.resolveCoordinate(store.getAddress(), store.getStoreName());
+
+        if (coord[0] != 0.0 || coord[1] != 0.0) {
+            StoreLocation location = StoreLocation.builder()
+                    .store(store)
+                    .lat(coord[0])
+                    .lng(coord[1])
+                    .geoUpdatedAt(LocalDateTime.now())
+                    .geoNote("geocoded by: " + (store.getAddress() != null && !store.getAddress().isBlank()
+                            ? "address" : "name"))
+                    .build();
+            store.setLocation(location); // cascade=ALL 가정
+        } else {
+            // 실패도 기록하고 싶으면:
+            StoreLocation location = StoreLocation.builder()
+                    .store(store)
+                    .lat(null)
+                    .lng(null)
+                    .geoUpdatedAt(LocalDateTime.now())
+                    .geoNote("geocode failed")
+                    .build();
+            store.setLocation(location);
+        }
+
+        return storeMapper.toResponse(store);
     }
+
+    private boolean isValidCoord(double[] c) {
+        return c != null && c.length == 2 && !(c[0] == 0.0 && c[1] == 0.0);
+    }
+
 
     @Transactional(readOnly = true)
     public StoreResponse readStoreById(Integer id) {

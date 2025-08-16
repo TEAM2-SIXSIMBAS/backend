@@ -2,8 +2,8 @@
 package org.example.schoolallianceinfor.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.schoolallianceinfor.dto.StoreInfoDto;
-import org.example.schoolallianceinfor.dto.PartnershipInfoDto;
+import org.example.schoolallianceinfor.dto.store.StoreInfoDto;
+import org.example.schoolallianceinfor.dto.partnership.PartnershipInfoDto;
 import org.example.schoolallianceinfor.service.InfoDtoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

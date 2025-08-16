@@ -2,7 +2,7 @@
 package org.example.schoolallianceinfor.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.schoolallianceinfor.dto.PartnershipInfoDto;
+import org.example.schoolallianceinfor.dto.partnership.PartnershipInfoDto;
 import org.example.schoolallianceinfor.entity.Partnership;
 import org.example.schoolallianceinfor.mapper.PartnershipMapper;
 import org.example.schoolallianceinfor.repository.PartnershipRepository;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +41,15 @@ public class HomeService {
                 .skip(start)
                 .limit(pageSize)
                 .map(partnershipMapper::toInfo) // 🔁 엔티티→Info DTO 매퍼 호출
+                .collect(Collectors.toList());
+    }
+
+    // HomeService.java (추가)
+    public List<PartnershipInfoDto> getSortedPartnershipsByCategoryAll(String category, String sortBy) {
+        return partnershipRepository.findAll().stream()
+                .filter(p -> filterByCategory(p, category))
+                .sorted(getComparator(sortBy))
+                .map(partnershipMapper::toInfo)
                 .collect(Collectors.toList());
     }
 

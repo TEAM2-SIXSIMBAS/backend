@@ -1,5 +1,5 @@
 // src/main/java/org/example/schoolallianceinfor/dto/StoreInfoDto.java
-package org.example.schoolallianceinfor.dto;
+package org.example.schoolallianceinfor.dto.store;
 
 import lombok.*;
 

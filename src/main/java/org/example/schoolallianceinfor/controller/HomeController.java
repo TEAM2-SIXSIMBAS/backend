@@ -2,7 +2,7 @@
 package org.example.schoolallianceinfor.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.schoolallianceinfor.dto.PartnershipInfoDto;
+import org.example.schoolallianceinfor.dto.partnership.PartnershipInfoDto;
 import org.example.schoolallianceinfor.service.HomeService;
 import org.springframework.web.bind.annotation.*;
 

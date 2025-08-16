@@ -1,7 +1,7 @@
 // src/main/java/org/example/schoolallianceinfor/mapper/PartnershipMapper.java
 package org.example.schoolallianceinfor.mapper;
 
-import org.example.schoolallianceinfor.dto.PartnershipInfoDto;
+import org.example.schoolallianceinfor.dto.partnership.PartnershipInfoDto;
 import org.example.schoolallianceinfor.dto.partnership.PartnershipRequest;
 import org.example.schoolallianceinfor.dto.partnership.PartnershipResponse;
 import org.example.schoolallianceinfor.entity.Partnership;

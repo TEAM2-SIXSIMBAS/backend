@@ -1,7 +1,7 @@
 // src/main/java/org/example/schoolallianceinfor/mapper/StoreMapper.java
 package org.example.schoolallianceinfor.mapper;
 
-import org.example.schoolallianceinfor.dto.StoreInfoDto;
+import org.example.schoolallianceinfor.dto.store.StoreInfoDto;
 import org.example.schoolallianceinfor.dto.store.StoreRequest;
 import org.example.schoolallianceinfor.dto.store.StoreResponse;
 import org.example.schoolallianceinfor.entity.Store;
@@ -83,4 +83,6 @@ public class StoreMapper {
                 .map(this::toInfo)
                 .toList();
     }
+
+
 }

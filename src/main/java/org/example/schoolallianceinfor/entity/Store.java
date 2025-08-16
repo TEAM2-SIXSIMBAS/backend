@@ -44,4 +44,16 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Partnership> partnerships = new ArrayList<>();
+
+    // ✅ 추가: 위치 정보 1:1 매핑 (StoreLocation이 연관의 주인)
+    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private StoreLocation location;
+
+    // 양방향 편의 메서드(선택)
+    public void setLocation(StoreLocation location) {
+        this.location = location;
+        if (location != null) {
+            location.setStore(this);
+        }
+    }
 }
