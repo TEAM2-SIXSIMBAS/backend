@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/school_alliance_db?serverTimezone=Asia/Seoul
+    username: root              # ← 너의 MySQL 사용자 이름으로 수정
+    password: Yjje3756     # ← 너의 MySQL 비밀번호로 수정
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update          # 자동 테이블 생성 (create: 초기화, update: 덧붙임)
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
